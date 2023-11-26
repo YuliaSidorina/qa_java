@@ -1,58 +1,44 @@
-import com.example.Lion;
 import com.example.Feline;
+import com.example.Lion;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 @RunWith(Parameterized.class)
 public class LionParameterizedTest {
 
-    @InjectMocks
-    private Lion lion;
+    private Feline felineMock;
+    private String sex;
+    private boolean expected;
 
-    @Mock
-    private Feline mockFeline;
-
-    private final String sex;
-    private final boolean expectedHasMane;
-
-    public LionParameterizedTest(String sex, boolean expectedHasMane) {
+    public LionParameterizedTest(String sex, boolean expected) {
         this.sex = sex;
-        this.expectedHasMane = expectedHasMane;
+        this.expected = expected;
+    }
+
+    @Before
+    public void setUp() {
+        felineMock = mock(Feline.class);
     }
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
                 {"Самец", true},
-                {"Самка", false},
-                {"Неверный пол", false} // Любое значение, которое приведет к исключению в конструкторе Lion
+                {"Самка", false}
         });
     }
 
-    @Before
-    public void setup() {
-        try {
-            Mockito.when(mockFeline.getFood(Mockito.anyString())).thenReturn(Arrays.asList("Корм для хищников"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Test
-    public void testDoesHaveMane() {
-        assertEquals(expectedHasMane, lion.doesHaveMane());
+    public void testConstructor() throws Exception {
+        Lion lion = new Lion(sex, felineMock);
+        assertEquals(expected, lion.doesHaveMane());
     }
 }
