@@ -6,9 +6,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -51,12 +49,12 @@ public class LionTest {
 
     @Test
     public void testConstructor() throws Exception {
-        assertEquals(true, lion.doesHaveMane());
+        assertTrue(lion.doesHaveMane());
     }
 
     @Test
     public void testConstructorFemale() throws Exception {
         Lion lionFemale = new Lion("Самка", felineMock);
-        assertEquals(false, lionFemale.doesHaveMane());
+        assertFalse(lionFemale.doesHaveMane());
     }
 }
